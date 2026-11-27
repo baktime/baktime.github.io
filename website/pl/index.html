@@ -35,6 +35,12 @@
     />
     <meta property="og:image:alt" content="baktime i miętowa kartoteka" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="baktime · Prosty backup baz danych i plików z GitHub Actions" />
+    <meta name="twitter:description" content="Zaplanuj szyfrowany backup PostgreSQL, MySQL i plików z Linuksa za pomocą GitHub Actions i restic. Utwórz prywatne repozytorium i skonfiguruj pierwszą kopię." />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="theme-color" content="#152f2c" />
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "applicationCategory": "UtilitiesApplication", "operatingSystem": "GitHub Actions", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "codeRepository": "https://github.com/baktime/baktime", "image": "https://baktime.github.io/assets/baktime-social.jpg", "name": "baktime", "description": "Darmowy szablon open source do zaplanowanych, szyfrowanych kopii PostgreSQL, MySQL i plików z Linuksa, uruchamianych przez GitHub Actions i restic, z powiadomieniami na Discordzie.", "inLanguage": "pl", "url": "https://baktime.github.io/pl/"}</script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script src="/language.js"></script>
     <link rel="stylesheet" href="/styles.css" />
@@ -49,7 +55,7 @@
           ></a
         >
         <nav class="links" aria-label="Nawigacja główna">
-          <a href="#how">Jak to działa</a><a href="#start">Konfiguracja</a
+          <a href="#why">Dlaczego</a><a href="#how">Jak to działa</a><a href="#start">Konfiguracja</a
           ><a href="#cost">Koszty</a>
         </nav>
         <nav class="languages" aria-label="Język">
@@ -128,73 +134,50 @@
           ><span>Pliki z Linuksa przez SSH</span>
         </div>
       </div>
-      <section id="how" class="block wrap">
-        <h2>Jak to działa</h2>
+      <section id="why" class="block wrap">
+        <h2>Dlaczego baktime</h2>
+        <p class="section-lede">Backup, który konfigurujesz raz i przestajesz o nim myśleć. Bez serwera, bez abonamentu, bez uzależnienia od dostawcy: dane trafiają do Twojego magazynu.</p>
         <div class="features" id="features">
           <article>
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              aria-hidden="true"
-            >
-              <rect x="4" y="10" width="16" height="11" rx="2" />
-              <path d="M8 10V7a4 4 0 0 1 8 0v3 M12 14v3" />
-            </svg>
-            <h3>Szyfrowanie przed wysyłką</h3>
-            <p>
-              restic szyfruje każdą kopię przed wysłaniem jej do magazynu. Hasło
-              zapisz w sekretach GitHuba, a jego kopię w menedżerze haseł.
-              Przyda się przy odtwarzaniu danych.
-            </p>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"/></svg>
+            <h3>Banalna konfiguracja</h3>
+            <p>Jeden sekret JSON na bazę danych lub katalog. Nie instalujesz agentów, nie utrzymujesz serwera kopii ani panelu.</p>
           </article>
           <article>
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              aria-hidden="true"
-            >
-              <path d="m12 2 10 5-10 5L2 7z M2 12l10 5 10-5 M2 17l10 5 10-5" />
-            </svg>
-            <h3>Mniej danych do przesłania</h3>
-            <p>
-              GitHub Actions przekazuje zrzut bazy bezpośrednio do restic. Przy
-              kopii plików uruchamia restic przez SSH na Twoim serwerze. Kolejna
-              kopia przesyła tylko bloki, których jeszcze nie ma w magazynie.
-            </p>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 8.5a4 4 0 0 1-.5 7.97 M12 12v7 M9 16l3 3 3-3"/></svg>
+            <h3>Działa na GitHubie</h3>
+            <p>Zadania wykonuje GitHub Actions na swoich maszynach. W prywatnym repozytorium zostaje konfiguracja i historia kopii.</p>
           </article>
           <article>
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              aria-hidden="true"
-            >
-              <path
-                d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 9h18c0-1-3-2-3-9z M10 20a2 2 0 0 0 4 0"
-              />
-            </svg>
-            <h3>Wiadomość po wykonaniu kopii</h3>
-            <p>
-              Wynik kopii i cotygodniowy raport możesz dostać na Discordzie.
-              Wolisz e-mail? GitHub Actions może wysyłać Ci wyniki uruchomionych
-              przez Ciebie zadań.
-            </p>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg>
+            <h3>Za darmo</h3>
+            <p>Szablon jest open source. Mała instalacja zwykle mieści się w darmowych limitach GitHub Actions, Cloudflare R2 i Workers. <a href="#cost">Zobacz szczegóły</a>.</p>
+          </article>
+          <article>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3 M12 14v3"/></svg>
+            <h3>Bezpieczny</h3>
+            <p>restic szyfruje każdą kopię przed wysłaniem. Adresy, hasła i klucze trzymasz w sekretach GitHuba, nigdy w repozytorium.</p>
+          </article>
+          <article>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+            <h3>Szybki i przyrostowy</h3>
+            <p>Zrzut bazy płynie prosto do restic. Pliki są kopiowane na samym serwerze. Po pierwszej kopii wysyłane są tylko zmienione bloki.</p>
+          </article>
+          <article>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 9h18c0-1-3-2-3-9z M10 20a2 2 0 0 0 4 0"/></svg>
+            <h3>Powiadomienia, jak chcesz</h3>
+            <p>Wiadomość na Discordzie po każdej kopii i cotygodniowy raport. Wolisz e-mail? Włącz powiadomienia GitHuba o nieudanych zadaniach.</p>
           </article>
         </div>
+      </section>
+      <section id="how" class="block wrap flow-block">
+        <h2>Jak to działa</h2>
+        <ol class="flow">
+          <li><strong>Opisujesz, co kopiować</strong><span>Dodajesz bazę danych lub katalog jako sekret na GitHubie, razem z harmonogramem cron.</span></li>
+          <li><strong>Mały Worker pilnuje czasu</strong><span>Darmowy Cloudflare Worker co pięć minut sprawdza, które kopie są do wykonania.</span></li>
+          <li><strong>GitHub Actions uruchamia restic</strong><span>Zadanie robi zrzut bazy albo łączy się z Twoim serwerem przez SSH.</span></li>
+          <li><strong>Dostajesz kopię i wiadomość</strong><span>Zaszyfrowana kopia trafia do Twojego zasobnika, a wynik do historii i na Discorda.</span></li>
+        </ol>
       </section>
       <section id="start" class="guide block">
         <div class="guide-grid wrap">
@@ -205,6 +188,8 @@
               używamy prywatnego repozytorium na GitHubie i magazynu Cloudflare
               R2.
             </p>
+            <h3 class="need-h">Czego potrzebujesz</h3>
+            <ul class="need"><li>Konta na GitHubie (wystarczy darmowe)</li><li>Konta Cloudflare na magazyn R2 i harmonogram</li><li>Bazy PostgreSQL lub MySQL albo serwera z Linuksem dostępnego przez SSH</li><li>Około 20 minut</li></ul>
             <a
               href="https://github.com/baktime/baktime/blob/main/docs/config-reference.md"
               >Pełna dokumentacja konfiguracji (EN)</a

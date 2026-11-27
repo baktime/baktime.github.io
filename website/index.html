@@ -40,6 +40,12 @@
       content="baktime and a mint-green archive box"
     />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="baktime · Simple database and file backups with GitHub Actions" />
+    <meta name="twitter:description" content="Schedule encrypted PostgreSQL, MySQL and Linux file backups with GitHub Actions and restic. Create a private repository and follow a working configuration example." />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="theme-color" content="#152f2c" />
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "applicationCategory": "UtilitiesApplication", "operatingSystem": "GitHub Actions", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "codeRepository": "https://github.com/baktime/baktime", "image": "https://baktime.github.io/assets/baktime-social.jpg", "name": "baktime", "description": "Free, open source template for scheduled, encrypted PostgreSQL, MySQL and Linux file backups run by GitHub Actions and restic, with Discord notifications.", "inLanguage": "en", "url": "https://baktime.github.io/"}</script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script src="/language.js"></script>
     <link rel="stylesheet" href="/styles.css" />
@@ -54,7 +60,7 @@
           ></a
         >
         <nav class="links" aria-label="Main navigation">
-          <a href="#how">How it works</a><a href="#start">Setup guide</a
+          <a href="#why">Why baktime</a><a href="#how">How it works</a><a href="#start">Setup guide</a
           ><a href="#cost">Costs</a>
         </nav>
         <nav class="languages" aria-label="Language">
@@ -134,72 +140,50 @@
           ><span>Linux files over SSH</span>
         </div>
       </div>
-      <section id="how" class="block wrap">
-        <h2>How it works</h2>
+      <section id="why" class="block wrap">
+        <h2>Why baktime</h2>
+        <p class="section-lede">A backup you set up once and stop thinking about. No server, no subscription, no lock-in: your data goes to storage you own.</p>
         <div class="features" id="features">
           <article>
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              aria-hidden="true"
-            >
-              <rect x="4" y="10" width="16" height="11" rx="2" />
-              <path d="M8 10V7a4 4 0 0 1 8 0v3 M12 14v3" />
-            </svg>
-            <h3>Encrypted before upload</h3>
-            <p>
-              restic encrypts each snapshot before it reaches your storage. The
-              password stays in your GitHub secrets. Keep a second copy in your
-              password manager for restores.
-            </p>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 12.5 9 17.5 20 6.5"/></svg>
+            <h3>Simple to set up</h3>
+            <p>One JSON secret per database or directory. No agents to install, no backup server, no dashboard to babysit.</p>
           </article>
           <article>
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              aria-hidden="true"
-            >
-              <path d="m12 2 10 5-10 5L2 7z M2 12l10 5 10-5 M2 17l10 5 10-5" />
-            </svg>
-            <h3>Less data to transfer</h3>
-            <p>
-              GitHub Actions streams database dumps into restic. For files,
-              restic runs on your Linux host over SSH. It reuses blocks already
-              in storage, so later backups only upload new data.
-            </p>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 8.5a4 4 0 0 1-.5 7.97 M12 12v7 M9 16l3 3 3-3"/></svg>
+            <h3>Runs on GitHub</h3>
+            <p>GitHub Actions does the work on its own runners. Your private repository keeps the workflows and the run history.</p>
           </article>
           <article>
-            <svg
-              class="icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              aria-hidden="true"
-            >
-              <path
-                d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 9h18c0-1-3-2-3-9z M10 20a2 2 0 0 0 4 0"
-              />
-            </svg>
-            <h3>A message after the run</h3>
-            <p>
-              Send backup results and a weekly report to Discord. Prefer email?
-              GitHub Actions can email you the outcome of workflows you trigger.
-            </p>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg>
+            <h3>Free to use</h3>
+            <p>The template is open source. A small setup usually fits the free tiers of GitHub Actions, Cloudflare R2 and Workers. <a href="#cost">See the numbers</a>.</p>
+          </article>
+          <article>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3 M12 14v3"/></svg>
+            <h3>Secure by default</h3>
+            <p>restic encrypts every snapshot before upload. Hosts, passwords and keys live in GitHub secrets, never in the repository.</p>
+          </article>
+          <article>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+            <h3>Fast and incremental</h3>
+            <p>Database dumps stream straight into restic. Files are backed up on the host itself. After the first run, only changed blocks are sent.</p>
+          </article>
+          <article>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 9h18c0-1-3-2-3-9z M10 20a2 2 0 0 0 4 0"/></svg>
+            <h3>Notifications your way</h3>
+            <p>A Discord message after every run and a weekly health report. Prefer email? Turn on GitHub's notifications for failed workflows.</p>
           </article>
         </div>
+      </section>
+      <section id="how" class="block wrap flow-block">
+        <h2>How it works</h2>
+        <ol class="flow">
+          <li><strong>You describe a target</strong><span>Add a database or a directory as a GitHub secret, with a cron schedule.</span></li>
+          <li><strong>A tiny Worker keeps time</strong><span>A free Cloudflare Worker checks every five minutes which targets are due.</span></li>
+          <li><strong>GitHub Actions runs restic</strong><span>The backup job dumps the database or reaches your server over SSH.</span></li>
+          <li><strong>You get a snapshot and a message</strong><span>An encrypted copy lands in your bucket. The result goes to history and to Discord.</span></li>
+        </ol>
       </section>
       <section id="start" class="guide block">
         <div class="guide-grid wrap">
@@ -209,6 +193,8 @@
               Start with one database or directory. The examples use a private
               GitHub repository and a Cloudflare R2 bucket.
             </p>
+            <h3 class="need-h">What you need</h3>
+            <ul class="need"><li>A GitHub account (a free plan is enough)</li><li>A Cloudflare account for R2 storage and the scheduler</li><li>A PostgreSQL or MySQL database, or a Linux server reachable over SSH</li><li>About 20 minutes</li></ul>
             <a
               href="https://github.com/baktime/baktime/blob/main/docs/config-reference.md"
               >Full configuration reference</a
