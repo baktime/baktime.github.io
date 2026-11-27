@@ -40,7 +40,7 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="theme-color" content="#152f2c" />
-    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "applicationCategory": "UtilitiesApplication", "operatingSystem": "GitHub Actions", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "codeRepository": "https://github.com/baktime/baktime", "image": "https://baktime.github.io/assets/baktime-social.jpg", "name": "baktime", "description": "Darmowy szablon open source do zaplanowanych, szyfrowanych kopii PostgreSQL, MySQL i plików z Linuksa, uruchamianych przez GitHub Actions i restic, z powiadomieniami na Discordzie.", "inLanguage": "pl", "url": "https://baktime.github.io/pl/"}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "applicationCategory": "UtilitiesApplication", "operatingSystem": "GitHub Actions", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "codeRepository": "https://github.com/baktime/baktime", "image": "https://baktime.github.io/assets/baktime-social.jpg", "name": "baktime", "description": "Darmowy szablon open source do zaplanowanych, szyfrowanych kopii PostgreSQL, MySQL i plików z Linuksa, uruchamianych przez GitHub Actions i restic, z powiadomieniami na Discordzie, Slacku, Telegramie lub przez webhook.", "inLanguage": "pl", "url": "https://baktime.github.io/pl/"}</script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script src="/language.js"></script>
     <link rel="stylesheet" href="/styles.css" />
@@ -166,7 +166,7 @@
           <article>
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 9h18c0-1-3-2-3-9z M10 20a2 2 0 0 0 4 0"/></svg>
             <h3>Powiadomienia, jak chcesz</h3>
-            <p>Wiadomość na Discordzie po każdej kopii i cotygodniowy raport. Wolisz e-mail? Włącz powiadomienia GitHuba o nieudanych zadaniach.</p>
+            <p>Wiadomość po każdej kopii i cotygodniowy raport: na Discordzie, Slacku, Telegramie albo przez własny webhook. Wolisz e-mail? Włącz powiadomienia GitHuba o nieudanych zadaniach.</p>
           </article>
         </div>
       </section>
@@ -176,7 +176,7 @@
           <li><strong>Opisujesz, co kopiować</strong><span>Dodajesz bazę danych lub katalog jako sekret na GitHubie, razem z harmonogramem cron.</span></li>
           <li><strong>Mały Worker pilnuje czasu</strong><span>Darmowy Cloudflare Worker co pięć minut sprawdza, które kopie są do wykonania.</span></li>
           <li><strong>GitHub Actions uruchamia restic</strong><span>Zadanie robi zrzut bazy albo łączy się z Twoim serwerem przez SSH.</span></li>
-          <li><strong>Dostajesz kopię i wiadomość</strong><span>Zaszyfrowana kopia trafia do Twojego zasobnika, a wynik do historii i na Discorda.</span></li>
+          <li><strong>Dostajesz kopię i wiadomość</strong><span>Zaszyfrowana kopia trafia do Twojego zasobnika, a wynik do historii i na wybrany kanał.</span></li>
         </ol>
       </section>
       <section id="start" class="guide block">
@@ -384,22 +384,61 @@ restic:
                 <summary>Wybierz sposób powiadamiania</summary>
                 <div class="step-body">
                   <p>
-                    <strong>Discord.</strong> W ustawieniach kanału otwórz
-                    Integracje → Webhooki i utwórz webhook. Dodaj w repozytorium
-                    sekret <code>NOTIFICATION_DISCORD</code> o wartości
-                    <code>true</code>. Adres webhooka wklej do sekretu
-                    <code>NOTIFICATION_DISCORD_WEBHOOK_URL</code>. Aby wysłać
-                    raport testowy, uruchom w Actions zadanie
-                    <strong>Weekly backup summary</strong>.
+                    Wybierz jeden kanał albo kilka. Każdy włączasz sekretem
+                    repozytorium o wartości <code>true</code>, a jego ustawienia
+                    dodajesz jako kolejne sekrety. Dostajesz wiadomość po każdej
+                    kopii i cotygodniowy raport.
                   </p>
+                  <dl>
+                    <dt>Discord</dt>
+                    <dd>
+                      <code>NOTIFICATION_DISCORD</code> =
+                      <code>true</code>. W ustawieniach kanału otwórz Integracje
+                      → Webhooki, utwórz webhook i wklej jego adres do
+                      <code>NOTIFICATION_DISCORD_WEBHOOK_URL</code>.
+                    </dd>
+                    <dt>Slack</dt>
+                    <dd>
+                      <code>NOTIFICATION_SLACK</code> = <code>true</code>.
+                      Utwórz aplikację na
+                      <a href="https://api.slack.com/apps">api.slack.com/apps</a>,
+                      włącz Incoming Webhooks i wklej adres webhooka do
+                      <code>NOTIFICATION_SLACK_WEBHOOK_URL</code>.
+                    </dd>
+                    <dt>Telegram</dt>
+                    <dd>
+                      <code>NOTIFICATION_TELEGRAM</code> = <code>true</code>.
+                      Utwórz bota przez
+                      <a href="https://t.me/BotFather">@BotFather</a> i zapisz
+                      jego token w <code>NOTIFICATION_TELEGRAM_BOT_TOKEN</code>.
+                      Identyfikator czatu lub grupy wpisz do
+                      <code>NOTIFICATION_TELEGRAM_CHAT_ID</code>.
+                    </dd>
+                    <dt>Własny webhook</dt>
+                    <dd>
+                      <code>NOTIFICATION_WEBHOOK</code> = <code>true</code>
+                      i adres HTTPS w <code>NOTIFICATION_WEBHOOK_URL</code>.
+                      baktime wysyła surowe zdarzenie JSON, gotowe dla n8n,
+                      Zapiera, Home Assistanta albo własnego skryptu.
+                    </dd>
+                    <dt>E-mail lub GitHub</dt>
+                    <dd>
+                      W
+                      <a href="https://github.com/settings/notifications"
+                        >ustawieniach powiadomień GitHuba</a
+                      >
+                      wybierz System → Actions, a następnie Email lub On GitHub.
+                      Możesz ograniczyć te wiadomości do nieudanych zadań.
+                    </dd>
+                  </dl>
                   <p>
-                    <strong>E-mail lub GitHub.</strong> Aby dostawać wyniki
-                    uruchomionych przez Ciebie zadań, w
-                    <a href="https://github.com/settings/notifications"
-                      >ustawieniach powiadomień GitHuba</a
-                    >
-                    wybierz System → Actions, a następnie Email lub On GitHub.
-                    Możesz ograniczyć te wiadomości do nieudanych zadań.
+                    Aby sprawdzić działanie, uruchom w Actions zadanie
+                    <strong>Weekly backup summary</strong>. Szczegóły każdego
+                    kanału znajdziesz w
+                    <a
+                      href="https://github.com/baktime/baktime/blob/main/docs/secrets.md#notifications"
+                      >opisie sekretów (EN)</a
+                    >.
                   </p>
                 </div>
               </details>

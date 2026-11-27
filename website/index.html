@@ -45,7 +45,7 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="theme-color" content="#152f2c" />
-    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "applicationCategory": "UtilitiesApplication", "operatingSystem": "GitHub Actions", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "codeRepository": "https://github.com/baktime/baktime", "image": "https://baktime.github.io/assets/baktime-social.jpg", "name": "baktime", "description": "Free, open source template for scheduled, encrypted PostgreSQL, MySQL and Linux file backups run by GitHub Actions and restic, with Discord notifications.", "inLanguage": "en", "url": "https://baktime.github.io/"}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "applicationCategory": "UtilitiesApplication", "operatingSystem": "GitHub Actions", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "codeRepository": "https://github.com/baktime/baktime", "image": "https://baktime.github.io/assets/baktime-social.jpg", "name": "baktime", "description": "Free, open source template for scheduled, encrypted PostgreSQL, MySQL and Linux file backups run by GitHub Actions and restic, with notifications in Discord, Slack, Telegram or a webhook.", "inLanguage": "en", "url": "https://baktime.github.io/"}</script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script src="/language.js"></script>
     <link rel="stylesheet" href="/styles.css" />
@@ -172,7 +172,7 @@
           <article>
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 9h18c0-1-3-2-3-9z M10 20a2 2 0 0 0 4 0"/></svg>
             <h3>Notifications your way</h3>
-            <p>A Discord message after every run and a weekly health report. Prefer email? Turn on GitHub's notifications for failed workflows.</p>
+            <p>A message after every run and a weekly health report, in Discord, Slack, Telegram or your own webhook. Prefer email? Turn on GitHub's notifications for failed workflows.</p>
           </article>
         </div>
       </section>
@@ -182,7 +182,7 @@
           <li><strong>You describe a target</strong><span>Add a database or a directory as a GitHub secret, with a cron schedule.</span></li>
           <li><strong>A tiny Worker keeps time</strong><span>A free Cloudflare Worker checks every five minutes which targets are due.</span></li>
           <li><strong>GitHub Actions runs restic</strong><span>The backup job dumps the database or reaches your server over SSH.</span></li>
-          <li><strong>You get a snapshot and a message</strong><span>An encrypted copy lands in your bucket. The result goes to history and to Discord.</span></li>
+          <li><strong>You get a snapshot and a message</strong><span>An encrypted copy lands in your bucket. The result goes to history and to your chosen channel.</span></li>
         </ol>
       </section>
       <section id="start" class="guide block">
@@ -380,21 +380,60 @@ restic:
                 <summary>Choose where you get notified</summary>
                 <div class="step-body">
                   <p>
-                    <strong>Discord.</strong> In your Discord channel, open
-                    Integrations → Webhooks and create a webhook. Add the
-                    repository secret <code>NOTIFICATION_DISCORD</code> with the
-                    value <code>true</code> and paste the webhook URL into
-                    <code>NOTIFICATION_DISCORD_WEBHOOK_URL</code>. Run
-                    <strong>Weekly backup summary</strong> from Actions to send
-                    a test report.
+                    Pick one channel or several. Turn each on with a repository
+                    secret set to <code>true</code>, then add its settings as
+                    further secrets. You get a message after every backup and a
+                    weekly health report.
                   </p>
+                  <dl>
+                    <dt>Discord</dt>
+                    <dd>
+                      <code>NOTIFICATION_DISCORD</code> =
+                      <code>true</code>. In the channel, open Integrations →
+                      Webhooks, create a webhook and paste its URL into
+                      <code>NOTIFICATION_DISCORD_WEBHOOK_URL</code>.
+                    </dd>
+                    <dt>Slack</dt>
+                    <dd>
+                      <code>NOTIFICATION_SLACK</code> = <code>true</code>.
+                      Create an app at
+                      <a href="https://api.slack.com/apps">api.slack.com/apps</a>,
+                      enable Incoming Webhooks and paste the webhook URL into
+                      <code>NOTIFICATION_SLACK_WEBHOOK_URL</code>.
+                    </dd>
+                    <dt>Telegram</dt>
+                    <dd>
+                      <code>NOTIFICATION_TELEGRAM</code> = <code>true</code>.
+                      Create a bot with
+                      <a href="https://t.me/BotFather">@BotFather</a> and save
+                      its token in <code>NOTIFICATION_TELEGRAM_BOT_TOKEN</code>.
+                      Put your chat or group ID in
+                      <code>NOTIFICATION_TELEGRAM_CHAT_ID</code>.
+                    </dd>
+                    <dt>Your own webhook</dt>
+                    <dd>
+                      <code>NOTIFICATION_WEBHOOK</code> = <code>true</code>
+                      and an HTTPS address in
+                      <code>NOTIFICATION_WEBHOOK_URL</code>. baktime sends the
+                      raw JSON event, ready for n8n, Zapier, Home Assistant or a
+                      script.
+                    </dd>
+                    <dt>Email or GitHub</dt>
+                    <dd>
+                      In your
+                      <a href="https://github.com/settings/notifications"
+                        >GitHub notification settings</a
+                      >, select Email or On GitHub under System → Actions. You
+                      can limit these to failed workflows.
+                    </dd>
+                  </dl>
                   <p>
-                    <strong>Email or GitHub.</strong> To receive results for
-                    workflows you trigger, select Email or On GitHub under
-                    System → Actions in your
-                    <a href="https://github.com/settings/notifications"
-                      >GitHub notification settings</a
-                    >. You can limit these messages to failed workflows.
+                    To test, run <strong>Weekly backup summary</strong> from
+                    Actions. Details for each channel are in the
+                    <a
+                      href="https://github.com/baktime/baktime/blob/main/docs/secrets.md#notifications"
+                      >secrets reference</a
+                    >.
                   </p>
                 </div>
               </details>
