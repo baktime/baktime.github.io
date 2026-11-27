@@ -43,6 +43,7 @@
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "applicationCategory": "UtilitiesApplication", "operatingSystem": "GitHub Actions", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "codeRepository": "https://github.com/baktime/baktime", "image": "https://baktime.github.io/assets/baktime-social.jpg", "name": "baktime", "description": "Darmowy szablon open source do zaplanowanych, szyfrowanych kopii PostgreSQL, MySQL i plików z Linuksa, uruchamianych przez GitHub Actions i restic, z powiadomieniami na Discordzie, Slacku, Telegramie lub przez webhook.", "inLanguage": "pl", "url": "https://baktime.github.io/pl/"}</script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script src="/language.js"></script>
+    <script src="/motion.js" defer></script>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
@@ -172,6 +173,50 @@
       </section>
       <section id="how" class="block wrap flow-block">
         <h2>Jak to działa</h2>
+        <figure class="pipeline-wrap">
+          <div class="pipeline" role="img" aria-label="Animacja jednej kopii: o 02:00 UTC harmonogram uruchamia zadanie GitHub Actions. Zadanie przesyła zrzut bazy do restic, który go szyfruje, pomija bloki zapisane wcześniej i wysyła do zasobnika tylko nowe. Na koniec powiadomienie informuje o wyniku.">
+            <span class="track" aria-hidden="true"></span>
+            <span class="pulse pulse-a" aria-hidden="true"></span>
+            <span class="pulse pulse-b" aria-hidden="true"></span>
+            <span class="packet pk1" aria-hidden="true"></span>
+            <span class="packet pk2" aria-hidden="true"></span>
+            <span class="packet pk3" aria-hidden="true"></span>
+            <span class="packet pk4" aria-hidden="true"></span>
+            <span class="packet pk5" aria-hidden="true"></span>
+            <span class="packet pk6" aria-hidden="true"></span>
+            <div class="station st-clock">
+              <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 12 15.9 9.75"/><path class="hand" d="M12 12V5.5"/></svg></span>
+              <strong>Harmonogram</strong>
+              <span class="detail"><span class="sub">02:00 UTC, czas na shop</span></span>
+            </div>
+            <div class="station st-runner">
+              <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><circle class="spin" cx="12" cy="12" r="9" stroke-dasharray="3.2 2.7"/><path d="M10 8.5v7l6-3.5z"/></svg></span>
+              <strong>GitHub Actions</strong>
+              <span class="detail"><span class="sub">uruchamia zadanie kopii</span></span>
+            </div>
+            <div class="station st-source">
+              <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13 M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></svg></span>
+              <strong>Twoja baza</strong>
+              <span class="detail"><span class="sub">zrzut płynie bez zapisu na dysk</span></span>
+            </div>
+            <div class="station st-lock">
+              <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="shackle" d="M8 11V8a4 4 0 0 1 8 0v3"/><path d="M12 15v2"/></svg></span>
+              <strong>restic</strong>
+              <span class="detail"><span class="sub">szyfruje, pomija znane bloki</span></span>
+            </div>
+            <div class="station st-bucket">
+              <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect class="level" x="6" y="9" width="12" height="11" rx="1" fill="currentColor" stroke="none"/><path d="M4 7h16l-1.6 12.4a2 2 0 0 1-2 1.6H7.6a2 2 0 0 1-2-1.6z"/></svg></span>
+              <strong>Twój zasobnik</strong>
+              <span class="detail"><span class="sub">zapisuje tylko nowe dane</span></span>
+            </div>
+            <div class="station st-notify">
+              <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path class="ring" d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 9h18c0-1-3-2-3-9z M10 20a2 2 0 0 0 4 0"/></svg></span>
+              <strong>Powiadomienie</strong>
+              <span class="detail"><span class="sub">Discord · Slack · Telegram</span><span class="toast">✓ shop · +12,4 MB · 38 s</span></span>
+            </div>
+          </div>
+          <figcaption class="legend" aria-hidden="true"><span class="key key-raw">surowe dane</span><span class="key key-enc">zaszyfrowany blok</span><span class="key key-dup">znany blok, pominięty</span></figcaption>
+        </figure>
         <ol class="flow">
           <li><strong>Opisujesz, co kopiować</strong><span>Dodajesz bazę danych lub katalog jako sekret na GitHubie, razem z harmonogramem cron.</span></li>
           <li><strong>Mały Worker pilnuje czasu</strong><span>Darmowy Cloudflare Worker co pięć minut sprawdza, które kopie są do wykonania.</span></li>

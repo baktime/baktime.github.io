@@ -48,6 +48,7 @@
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "applicationCategory": "UtilitiesApplication", "operatingSystem": "GitHub Actions", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "codeRepository": "https://github.com/baktime/baktime", "image": "https://baktime.github.io/assets/baktime-social.jpg", "name": "baktime", "description": "Free, open source template for scheduled, encrypted PostgreSQL, MySQL and Linux file backups run by GitHub Actions and restic, with notifications in Discord, Slack, Telegram or a webhook.", "inLanguage": "en", "url": "https://baktime.github.io/"}</script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script src="/language.js"></script>
+    <script src="/motion.js" defer></script>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
@@ -178,6 +179,50 @@
       </section>
       <section id="how" class="block wrap flow-block">
         <h2>How it works</h2>
+        <figure class="pipeline-wrap">
+          <div class="pipeline" role="img" aria-label="Animation of one backup run: at 02:00 UTC the scheduler starts a GitHub Actions job. The job streams a database dump into restic, which encrypts it, skips blocks already stored and uploads only new ones to your bucket. A notification then reports the result.">
+            <span class="track" aria-hidden="true"></span>
+            <span class="pulse pulse-a" aria-hidden="true"></span>
+            <span class="pulse pulse-b" aria-hidden="true"></span>
+            <span class="packet pk1" aria-hidden="true"></span>
+            <span class="packet pk2" aria-hidden="true"></span>
+            <span class="packet pk3" aria-hidden="true"></span>
+            <span class="packet pk4" aria-hidden="true"></span>
+            <span class="packet pk5" aria-hidden="true"></span>
+            <span class="packet pk6" aria-hidden="true"></span>
+            <div class="station st-clock">
+              <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 12 15.9 9.75"/><path class="hand" d="M12 12V5.5"/></svg></span>
+              <strong>Scheduler</strong>
+              <span class="detail"><span class="sub">02:00 UTC, shop is due</span></span>
+            </div>
+            <div class="station st-runner">
+              <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><circle class="spin" cx="12" cy="12" r="9" stroke-dasharray="3.2 2.7"/><path d="M10 8.5v7l6-3.5z"/></svg></span>
+              <strong>GitHub Actions</strong>
+              <span class="detail"><span class="sub">starts the backup job</span></span>
+            </div>
+            <div class="station st-source">
+              <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7" ry="2.5"/><path d="M5 5.5v13c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-13 M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></svg></span>
+              <strong>Your database</strong>
+              <span class="detail"><span class="sub">dump streams, never hits disk</span></span>
+            </div>
+            <div class="station st-lock">
+              <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="shackle" d="M8 11V8a4 4 0 0 1 8 0v3"/><path d="M12 15v2"/></svg></span>
+              <strong>restic</strong>
+              <span class="detail"><span class="sub">encrypts, skips known blocks</span></span>
+            </div>
+            <div class="station st-bucket">
+              <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect class="level" x="6" y="9" width="12" height="11" rx="1" fill="currentColor" stroke="none"/><path d="M4 7h16l-1.6 12.4a2 2 0 0 1-2 1.6H7.6a2 2 0 0 1-2-1.6z"/></svg></span>
+              <strong>Your bucket</strong>
+              <span class="detail"><span class="sub">stores only new data</span></span>
+            </div>
+            <div class="station st-notify">
+              <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path class="ring" d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 9h18c0-1-3-2-3-9z M10 20a2 2 0 0 0 4 0"/></svg></span>
+              <strong>Notification</strong>
+              <span class="detail"><span class="sub">Discord · Slack · Telegram</span><span class="toast">✓ shop · +12.4 MB · 38 s</span></span>
+            </div>
+          </div>
+          <figcaption class="legend" aria-hidden="true"><span class="key key-raw">raw data</span><span class="key key-enc">encrypted block</span><span class="key key-dup">known block, skipped</span></figcaption>
+        </figure>
         <ol class="flow">
           <li><strong>You describe a target</strong><span>Add a database or a directory as a GitHub secret, with a cron schedule.</span></li>
           <li><strong>A tiny Worker keeps time</strong><span>A free Cloudflare Worker checks every five minutes which targets are due.</span></li>

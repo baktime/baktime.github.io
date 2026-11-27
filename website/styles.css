@@ -574,3 +574,397 @@ footer .brand {
 .thanks .button:hover {
   background: #a84f22;
 }
+
+/* ---- Animated backup pipeline (one 10 s loop) ---- */
+@property --p {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+@property --on {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+.pipeline-wrap {
+  margin: 2rem 0 0;
+}
+.pipeline {
+  --loop: 10s;
+  --icon: 4rem;
+  --pad: 2rem;
+  --raw: #e0864f;
+  --enc: #2f9e7a;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  padding: var(--pad) 0 1.6rem;
+  background:
+    radial-gradient(circle at 70% 0%, #dff0e5 0, transparent 55%),
+    var(--wash);
+  border: 1px solid var(--line);
+  border-radius: 1.2rem;
+  overflow: hidden;
+}
+.track,
+.pulse,
+.packet {
+  position: absolute;
+  top: calc(var(--pad) + var(--icon) / 2);
+}
+.track {
+  left: 8.333%;
+  right: 8.333%;
+  height: 2px;
+  margin-top: -1px;
+  background: repeating-linear-gradient(90deg, #a9c4b5 0 6px, transparent 6px 12px);
+  animation: track-flow 1s linear infinite;
+}
+@keyframes track-flow {
+  to {
+    background-position: 12px 0;
+  }
+}
+.pulse,
+.packet {
+  left: var(--p);
+  z-index: 2;
+  translate: -50% -50%;
+  opacity: 0;
+  animation: var(--loop) linear infinite;
+}
+.pulse {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0.35rem rgb(26 104 87 / 0.18), 0 0 1rem rgb(26 104 87 / 0.5);
+}
+.pulse-a {
+  animation-name: pulse-a;
+}
+.pulse-b {
+  animation-name: pulse-b;
+}
+@keyframes pulse-a {
+  0%, 9% { --p: 8.333%; opacity: 0; }
+  10% { --p: 8.333%; opacity: 1; }
+  30% { --p: 41.667%; opacity: 1; }
+  32%, 100% { --p: 41.667%; opacity: 0; }
+}
+@keyframes pulse-b {
+  0%, 69% { --p: 75%; opacity: 0; }
+  70% { --p: 75%; opacity: 1; }
+  77% { --p: 91.667%; opacity: 1; }
+  79%, 100% { --p: 91.667%; opacity: 0; }
+}
+.packet {
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 0.25rem;
+  background: var(--raw);
+  box-shadow: 0 0.2rem 0.5rem rgb(21 47 44 / 0.25);
+  animation-name: packet;
+}
+.pk2 { animation-delay: 0.25s; }
+.pk3 { animation-delay: 0.5s; animation-name: packet-dup; }
+.pk4 { animation-delay: 0.75s; }
+.pk5 { animation-delay: 1s; }
+.pk6 { animation-delay: 1.25s; }
+@keyframes packet {
+  0%, 31% { --p: 41.667%; opacity: 0; background: var(--raw); scale: 1; rotate: 0deg; }
+  32% { --p: 41.667%; opacity: 1; }
+  43.5% { --p: 58.333%; background: var(--raw); scale: 1; rotate: 0deg; }
+  45% { scale: 1.35; rotate: 45deg; }
+  46.5% { background: var(--enc); scale: 1; rotate: 90deg; }
+  56% { --p: 75%; opacity: 1; scale: 1; }
+  58%, 100% { --p: 75%; opacity: 0; scale: 0.4; background: var(--enc); rotate: 90deg; }
+}
+@keyframes packet-dup {
+  0%, 31% { --p: 41.667%; opacity: 0; background: var(--raw); scale: 1; }
+  32% { --p: 41.667%; opacity: 1; }
+  43.5% { --p: 58.333%; opacity: 1; background: var(--raw); scale: 1; translate: -50% -50%; }
+  47% { --p: 60%; opacity: 0.6; background: #9db3a8; scale: 0.8; translate: -50% -50%; }
+  52%, 100% { --p: 61%; opacity: 0; background: #9db3a8; scale: 0.4; translate: -50% 80%; }
+}
+.station {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0 0.5rem;
+  text-align: center;
+  animation: var(--loop) linear infinite;
+}
+.node {
+  display: grid;
+  place-items: center;
+  width: var(--icon);
+  height: var(--icon);
+  margin-bottom: 0.6rem;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--ink) calc(var(--on) * 100%), var(--line));
+  background: color-mix(in srgb, var(--ink) calc(var(--on) * 100%), var(--paper));
+  color: color-mix(in srgb, white calc(var(--on) * 100%), var(--accent));
+  box-shadow: 0 0 0 calc(var(--on) * 0.5rem) rgb(115 197 167 / 0.35);
+  scale: calc(1 + var(--on) * 0.06);
+}
+.node svg {
+  width: 1.75rem;
+  height: 1.75rem;
+  overflow: visible;
+}
+.station strong {
+  font-size: 0.98rem;
+  line-height: 1.3;
+}
+.detail {
+  display: grid;
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.detail {
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+}
+.detail > * {
+  grid-area: 1 / 1;
+}
+.st-clock { animation-name: on-clock; }
+.st-runner { animation-name: on-runner; }
+.st-source { animation-name: on-source; }
+.st-lock { animation-name: on-lock; }
+.st-bucket { animation-name: on-bucket; }
+.st-notify { animation-name: on-notify; }
+@keyframes on-clock { 0%, 13% { --on: 1; } 16%, 96% { --on: 0; } 100% { --on: 1; } }
+@keyframes on-runner { 0%, 17% { --on: 0; } 19%, 33% { --on: 1; } 36%, 100% { --on: 0; } }
+@keyframes on-source { 0%, 29% { --on: 0; } 31%, 50% { --on: 1; } 53%, 100% { --on: 0; } }
+@keyframes on-lock { 0%, 41% { --on: 0; } 43%, 60% { --on: 1; } 63%, 100% { --on: 0; } }
+@keyframes on-bucket { 0%, 54% { --on: 0; } 56%, 70% { --on: 1; } 73%, 100% { --on: 0; } }
+@keyframes on-notify { 0%, 76% { --on: 0; } 78%, 93% { --on: 1; } 96%, 100% { --on: 0; } }
+.pipeline svg * {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  animation: var(--loop) ease-in-out infinite;
+}
+.pipeline .hand { animation-name: clock-hand; }
+@keyframes clock-hand { 0% { rotate: 0deg; } 11%, 100% { rotate: 720deg; } }
+.pipeline .spin { animation-name: spin; }
+@keyframes spin { 0%, 17% { rotate: 0deg; } 35%, 100% { rotate: 360deg; } }
+.pipeline .shackle { animation-name: shackle; }
+@keyframes shackle {
+  0%, 41% { translate: 0 -2.5px; }
+  44%, 92% { translate: 0 0; }
+  96%, 100% { translate: 0 -2.5px; }
+}
+.pipeline .level {
+  transform-origin: 12px 20px;
+  opacity: 0.4;
+  animation-name: level;
+}
+@keyframes level {
+  0%, 55% { scale: 1 0.2; }
+  70%, 94% { scale: 1 0.95; }
+  100% { scale: 1 0.2; }
+}
+.pipeline .ring {
+  transform-origin: 12px 3px;
+  animation-name: ring;
+}
+@keyframes ring {
+  0%, 77% { rotate: 0deg; }
+  79% { rotate: 14deg; }
+  81% { rotate: -12deg; }
+  83% { rotate: 8deg; }
+  85%, 100% { rotate: 0deg; }
+}
+.toast,
+.st-notify .sub {
+  animation: var(--loop) ease-out infinite;
+}
+.toast {
+  justify-self: center;
+  align-self: start;
+  padding: 0.15rem 0.55rem;
+  border-radius: 0.4rem;
+  background: var(--ink);
+  color: #e5f1e7;
+  font: 600 0.78rem/1.5 var(--mono);
+  text-align: center;
+  opacity: 0;
+  animation-name: toast;
+}
+@keyframes toast {
+  0%, 77% { opacity: 0; translate: 0 0.5rem; }
+  80%, 94% { opacity: 1; translate: 0 0; }
+  98%, 100% { opacity: 0; translate: 0 0; }
+}
+.st-notify .sub {
+  animation-name: toast-sub;
+}
+@keyframes toast-sub {
+  0%, 77% { opacity: 1; }
+  79%, 95% { opacity: 0; }
+  98%, 100% { opacity: 1; }
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.4rem;
+  margin-top: 0.8rem;
+  font: 0.8rem/1.5 var(--mono);
+  color: var(--muted);
+}
+.key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.key::before {
+  content: "";
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 0.18rem;
+}
+.key-raw::before { background: #e0864f; }
+.key-enc::before { background: #2f9e7a; rotate: 45deg; }
+.key-dup::before { background: #9db3a8; opacity: 0.7; }
+.pipeline.paused,
+.pipeline.paused * {
+  animation-play-state: paused;
+}
+@media (max-width: 54rem) {
+  .pipeline {
+    --icon: 3.4rem;
+  }
+  .node svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .station strong {
+    font-size: 0.88rem;
+  }
+  .detail {
+    font-size: 0.76rem;
+  }
+  .toast {
+    font-size: 0.7rem;
+  }
+}
+@media (max-width: 43rem) {
+  .pipeline {
+    --icon: 3.2rem;
+    --row: 5.2rem;
+    --x: calc(1rem + var(--icon) / 2);
+    grid-template-columns: 1fr;
+    grid-auto-rows: var(--row);
+    padding: 0 1rem;
+  }
+  .track,
+  .pulse,
+  .packet {
+    left: var(--x);
+  }
+  .pulse,
+  .packet {
+    top: var(--p);
+  }
+  .track {
+    top: 8.333%;
+    bottom: 8.333%;
+    right: auto;
+    width: 2px;
+    height: auto;
+    margin: 0 0 0 -1px;
+    background: repeating-linear-gradient(180deg, #a9c4b5 0 6px, transparent 6px 12px);
+    animation-name: track-flow-y;
+  }
+  @keyframes track-flow-y {
+    to {
+      background-position: 0 12px;
+    }
+  }
+  .station {
+    display: grid;
+    grid-template-columns: var(--icon) 1fr;
+    grid-template-rows: auto auto;
+    align-content: center;
+    column-gap: 1rem;
+    row-gap: 0.1rem;
+    padding: 0;
+    text-align: left;
+  }
+  .node {
+    grid-row: 1 / 3;
+    margin: 0;
+  }
+  .station strong {
+    align-self: end;
+    font-size: 0.98rem;
+  }
+  .detail {
+    align-self: start;
+    font-size: 0.84rem;
+  }
+  .toast {
+    justify-self: start;
+    text-align: left;
+    font-size: 0.76rem;
+  }
+}
+/* A little burst when the notification arrives */
+.st-notify .node {
+  position: relative;
+}
+.st-notify .node::before,
+.st-notify .node::after {
+  content: "";
+  position: absolute;
+  inset: -0.2rem;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  animation: var(--loop) ease-out infinite;
+}
+.st-notify .node::before {
+  border: 2px solid #73c5a7;
+  animation-name: burst-ring;
+}
+.st-notify .node::after {
+  inset: -1.1rem;
+  background:
+    radial-gradient(circle, #e0864f 0 3.5px, transparent 4px) 50% 0 / 0.6rem 0.6rem no-repeat,
+    radial-gradient(circle, #2f9e7a 0 3.5px, transparent 4px) 100% 50% / 0.6rem 0.6rem no-repeat,
+    radial-gradient(circle, #73c5a7 0 3.5px, transparent 4px) 50% 100% / 0.6rem 0.6rem no-repeat,
+    radial-gradient(circle, #e0864f 0 3.5px, transparent 4px) 0 50% / 0.6rem 0.6rem no-repeat,
+    radial-gradient(circle, #2f9e7a 0 3px, transparent 3.5px) 85% 15% / 0.6rem 0.6rem no-repeat,
+    radial-gradient(circle, #73c5a7 0 3px, transparent 3.5px) 15% 85% / 0.6rem 0.6rem no-repeat,
+    radial-gradient(circle, #e0864f 0 3px, transparent 3.5px) 85% 85% / 0.6rem 0.6rem no-repeat,
+    radial-gradient(circle, #2f9e7a 0 3px, transparent 3.5px) 15% 15% / 0.6rem 0.6rem no-repeat;
+  animation-name: burst-sparks;
+}
+@keyframes burst-ring {
+  0%, 77% { opacity: 0; scale: 1; }
+  78% { opacity: 0.9; scale: 1; }
+  88%, 100% { opacity: 0; scale: 1.7; }
+}
+@keyframes burst-sparks {
+  0%, 77% { opacity: 0; scale: 0.5; rotate: 0deg; }
+  79% { opacity: 1; scale: 0.8; }
+  90%, 100% { opacity: 0; scale: 1.45; rotate: 25deg; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pipeline,
+  .pipeline *,
+  .pipeline *::before,
+  .pipeline *::after {
+    animation: none !important;
+  }
+  .pulse,
+  .packet {
+    display: none;
+  }
+}
