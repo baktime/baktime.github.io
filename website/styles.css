@@ -548,3 +548,29 @@ footer .brand {
     font-size: 0.88rem;
   }
 }
+.thanks {
+  background: var(--ink);
+  color: #e5f1e7;
+}
+.thanks .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 3rem;
+  padding-block: clamp(2.5rem, 4vw, 3.5rem);
+}
+.thanks h2 {
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+}
+.thanks p {
+  margin-top: 0.6rem;
+  max-width: 52ch;
+  color: #bdcbc1;
+}
+.thanks .button {
+  background: #c36230;
+}
+.thanks .button:hover {
+  background: #a84f22;
+}

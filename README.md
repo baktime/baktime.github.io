@@ -4,7 +4,7 @@
 
 baktime schedules encrypted backups of databases and Linux files with GitHub Actions and restic. The homepage explains costs, notifications and how to verify a first snapshot.
 
-[Create your repository](https://github.com/baktime/baktime/generate) · [English setup guide](https://baktime.github.io/?lang=en#start) · [Instrukcja po polsku](https://baktime.github.io/pl/#start)
+[Create your repository](https://github.com/baktime/baktime/generate) · [English setup guide](https://baktime.github.io/?lang=en#start) · [Instrukcja po polsku](https://baktime.github.io/pl/#start) · [Say thanks on Suppi](https://suppi.pl/mleczakm)
 
 ## Work on the site
 
